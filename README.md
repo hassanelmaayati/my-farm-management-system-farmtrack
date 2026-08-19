@@ -40,6 +40,7 @@ FarmTrack is a farm management web app that lets farmers organize their animals 
 
 
 ## Wireframes
+to be continued
 
 <img width="1798" height="727" alt="wireframe" src="https://github.com/user-attachments/assets/abe205f1-961d-4c8e-910a-e59ecf9dd921" />
 
