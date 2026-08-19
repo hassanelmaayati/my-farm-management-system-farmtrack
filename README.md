@@ -35,6 +35,7 @@ FarmTrack is a farm management web app that lets farmers organize their animals 
 
 ## ERD
 
+<img width="825" height="650" alt="erd" src="https://github.com/user-attachments/assets/bbb62ccf-84e3-4ea9-9a0c-8a636745226a" />
 
 
 ## Wireframes
