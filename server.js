@@ -4,6 +4,7 @@ const session = require('express-session')
 const express = require('express');
 const app = express();
 const mongoose=require('mongoose')
+const authRoter=require('./routes/auth.js')
 
 mongoose.connect(process.env.MONGODB_URI);
 mongoose.connection.on('connected', () => {
@@ -18,7 +19,7 @@ app.use(session({
   saveUninitialized:false,
 }))
 
-
+app.use('/', authRouter);
 
 
 

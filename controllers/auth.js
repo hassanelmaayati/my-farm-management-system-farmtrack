@@ -7,6 +7,7 @@ const signup= async(req,res)=>{
     if(userInDatabase){
       return res.send('Username unavailable.')
     }
+    
     const user=await User.create({
       username:req.body.username,
       password: req.body.password,
