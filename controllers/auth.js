@@ -53,10 +53,4 @@ const logout = (req, res) => {
   })
 }
 
-const logout= (req,res)=>{
-  req.session.destroy(()=>{
-    res.redirect('/')
-  })
-}
-
 module.exports={ signup, login, logout}

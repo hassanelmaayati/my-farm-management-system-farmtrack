@@ -5,6 +5,9 @@ const express = require('express');
 const app = express();
 const mongoose=require('mongoose')
 const authRoter=require('./routes/auth.js')
+const structuresRouter = require('./routes/structures.js');
+const methodOverride = require('method-override');
+
 
 mongoose.connect(process.env.MONGODB_URI);
 mongoose.connection.on('connected', () => {
@@ -20,12 +23,8 @@ app.use(session({
 }))
 
 app.use('/', authRouter);
-
-
-
-app.get('/', (req, res) => {
-  res.send('FarmTrack is running!');
-});
+app.use(methodOverride('_method'));
+app.use('/structures', structuresRouter);
 
 
 

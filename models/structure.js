@@ -22,4 +22,4 @@ const structureSchema=new mongoose.Schema({
 
 const Structure=mongoose.model('Structure', structureSchema)
 
-module.exports= structure
+module.exports= Structure
