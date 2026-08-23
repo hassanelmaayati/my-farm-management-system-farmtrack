@@ -47,10 +47,15 @@ const login=async(req,res)=>{
     res.redirect('/')
   }
 
-
+const logout= (req,res)=>{
+  req.session.destroy(()=>{
+    res.redirect('/')
+  })
+}
   }
 }
 
 
 
 
+module.exports={ signup, login, logout}
