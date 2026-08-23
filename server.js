@@ -7,6 +7,7 @@ const mongoose=require('mongoose')
 const authRoter=require('./routes/auth.js')
 const structuresRouter = require('./routes/structures.js');
 const methodOverride = require('method-override');
+const animalsRouter = require('./routes/animals.js');
 
 
 mongoose.connect(process.env.MONGODB_URI);
@@ -25,6 +26,7 @@ app.use(session({
 app.use('/', authRouter);
 app.use(methodOverride('_method'));
 app.use('/structures', structuresRouter);
+app.use('/structures/:structureId/animals', animalsRouter);
 
 
 
