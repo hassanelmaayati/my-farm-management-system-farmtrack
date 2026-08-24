@@ -31,7 +31,7 @@ try{
     res.render('structures/show.ejs',{structure})
 }catch(err){
   console.log(err)
-  res.redirect('/structers')
+  res.redirect('/structures')
 }
 }
 const renderEditForm = async (req, res) => {
@@ -77,5 +77,5 @@ const destroy = async (req, res) => {
   }
 };
 
-module.exports = { index, create, show, renderNewForm, renderEditForm, update, destroy };
+module.exports = { index, create, show, renderEditForm, update, destroy };
 

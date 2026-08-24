@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= animal.name %> Details</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('../partials/navbar.ejs') %>
+  <h1><%= animal.name %></h1>
+  <p><strong>Species:</strong> <%= animal.species %></p>
+  <p><strong>Breed:</strong> <%= animal.breed || 'N/A' %></p>
+  <p><strong>Birthdate:</strong> <%= animal.birthdate ? animal.birthdate.toISOString().split('T')[0] : 'N/A' %></p>
+  <p><strong>Status:</strong> <%= animal.status %></p>
+  <p><strong>Notes:</strong> <%= animal.notes || 'None' %></p>
+
+  <a href="/structures/<%= structure._id %>/animals/<%= animal._id %>/edit">Edit Animal</a>
+
+  <form action="/structures/<%= structure._id %>/animals/<%= animal._id %>?_method=DELETE" method="POST" style="display:inline;">
+    <button type="submit">Delete Animal</button>
+  </form>
+
+  <hr>
+
+  <h2>Logs</h2>
+  <a href="/structures/<%= structure._id %>/animals/<%= animal._id %>/logEntries/new">Add Log Entry</a>
+
+  <% if (logs && logs.length > 0) { %>
+    <ul>
+      <% logs.forEach(log => { %>
+        <li>
+          <strong><%= log.eventType %></strong> (<%= log.date ? log.date.toISOString().split('T')[0] : 'No Date' %>):
+          <%= log.description %>
+          <a href="/structures/<%= structure._id %>/animals/<%= animal._id %>/logEntries/<%= log._id %>/edit">Edit</a>
+          <form action="/structures/<%= structure._id %>/animals/<%= animal._id %>/logEntries/<%= log._id %>?_method=DELETE" method="POST" style="display:inline;">
+            <button type="submit">Delete</button>
+          </form>
+        </li>
+      <% }) %>
+    </ul>
+  <% } else { %>
+    <p>No log entries yet.</p>
+  <% } %>
+</body>
+</html>

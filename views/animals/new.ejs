@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Animal - <%= structure.name %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('../partials/navbar.ejs') %>
+  <h1>Add Animal to <%= structure.name %></h1>
+
+  <form action="/structures/<%= structure._id %>/animals" method="POST">
+    <label for="name">Name:</label>
+    <input type="text" name="name" id="name" required>
+
+    <label for="species">Species:</label>
+    <input type="text" name="species" id="species" required>
+
+    <label for="breed">Breed:</label>
+    <input type="text" name="breed" id="breed">
+
+    <label for="birthdate">Birthdate:</label>
+    <input type="date" name="birthdate" id="birthdate">
+
+    <label for="status">Status:</label>
+    <select name="status" id="status">
+      <option value="Healthy">Healthy</option>
+      <option value="Sick">Sick</option>
+      <option value="Sold">Sold</option>
+      <option value="Deceased">Deceased</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <label for="notes">Notes:</label>
+    <textarea name="notes" id="notes"></textarea>
+
+    <button type="submit">Save Animal</button>
+  </form>
+</body>
+</html>

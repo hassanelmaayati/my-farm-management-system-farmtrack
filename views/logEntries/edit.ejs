@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Log Entry</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('../partials/navbar.ejs') %>
+  <h1>Edit Log Entry</h1>
+
+  <form action="/structures/<%= structure._id %>/animals/<%= animal._id %>/logEntries/<%= logEntry._id %>?_method=PUT" method="POST">
+    <label for="date">Date:</label>
+    <input type="date" name="date" id="date" value="<%= logEntry.date ? logEntry.date.toISOString().split('T')[0] : '' %>" required>
+
+    <label for="eventType">Event Type:</label>
+    <select name="eventType" id="eventType" required>
+      <% const types = ['Fed', 'Vet Visit', 'Sold', 'Died', 'Other']; %>
+      <% types.forEach(t => { %>
+        <option value="<%= t %>" <%= logEntry.eventType === t ? 'selected' : '' %>><%= t %></option>
+      <% }) %>
+    </select>
+
+    <label for="description">Description:</label>
+    <textarea name="description" id="description"><%= logEntry.description %></textarea>
+
+    <button type="submit">Update Entry</button>
+  </form>
+</body>
+</html>

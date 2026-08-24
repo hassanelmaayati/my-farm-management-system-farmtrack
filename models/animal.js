@@ -29,7 +29,7 @@ const animalSchema= new mongoose.Schema({
     type: String,
   }
 
-  ,Structure:{
+  ,structure:{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Structure',
     required:true,

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit <%= animal.name %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('../partials/navbar.ejs') %>
+  <h1>Edit <%= animal.name %></h1>
+
+  <form action="/structures/<%= structure._id %>/animals/<%= animal._id %>?_method=PUT" method="POST">
+    <label for="name">Name:</label>
+    <input type="text" name="name" id="name" value="<%= animal.name %>" required>
+
+    <label for="species">Species:</label>
+    <input type="text" name="species" id="species" value="<%= animal.species %>" required>
+
+    <label for="breed">Breed:</label>
+    <input type="text" name="breed" id="breed" value="<%= animal.breed %>">
+
+    <label for="birthdate">Birthdate:</label>
+    <input type="date" name="birthdate" id="birthdate" value="<%= animal.birthdate ? animal.birthdate.toISOString().split('T')[0] : '' %>">
+
+    <label for="status">Status:</label>
+    <select name="status" id="status">
+      <% const statuses = ['Healthy', 'Sick', 'Sold', 'Deceased', 'Other']; %>
+      <% statuses.forEach(s => { %>
+        <option value="<%= s %>" <%= animal.status === s ? 'selected' : '' %>><%= s %></option>
+      <% }) %>
+    </select>
+
+    <label for="notes">Notes:</label>
+    <textarea name="notes" id="notes"><%= animal.notes %></textarea>
+
+    <button type="submit">Update Animal</button>
+  </form>
+</body>
+</html>

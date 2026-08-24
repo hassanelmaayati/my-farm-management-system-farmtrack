@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>New Log Entry</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('../partials/navbar.ejs') %>
+  <h1>New Log Entry for <%= animal.name %></h1>
+
+  <form action="/structures/<%= structure._id %>/animals/<%= animal._id %>/logEntries" method="POST">
+    <label for="date">Date:</label>
+    <input type="date" name="date" id="date" required>
+
+    <label for="eventType">Event Type:</label>
+    <select name="eventType" id="eventType" required>
+      <option value="Fed">Fed</option>
+      <option value="Vet Visit">Vet Visit</option>
+      <option value="Sold">Sold</option>
+      <option value="Died">Died</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <label for="description">Description:</label>
+    <textarea name="description" id="description"></textarea>
+
+    <button type="submit">Save Entry</button>
+  </form>
+</body>
+</html>
