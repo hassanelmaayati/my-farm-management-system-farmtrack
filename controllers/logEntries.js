@@ -2,7 +2,7 @@ const LogEntry = require('../models/logEntry.js');
 const Animal = require('../models/animal.js');
 const Structure = require('../models/structure.js');
 
-// Helper to verify the full ownership chain: Structure -> Animal
+
 const findOwnedAnimal = async (req) => {
   const structure = await Structure.findOne({
     _id: req.params.structureId,
@@ -21,6 +21,11 @@ const create = async (req, res) => {
   try {
     const owned = await findOwnedAnimal(req);
     if (!owned) return res.redirect('/structures');
+
+    const { date, eventType } = req.body;
+    if (!date || !eventType) {
+      return res.render('logEntries/new.ejs', { structure: owned.structure, animal: owned.animal, error: 'Date and event type are required.' });
+    }
 
     req.body.animal = owned.animal._id;
     await LogEntry.create(req.body);
