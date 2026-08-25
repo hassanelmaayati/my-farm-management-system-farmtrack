@@ -7,6 +7,12 @@
 </head>
 <body>
   <%- include('../partials/navbar.ejs') %>
+  <%- include('../partials/breadcrumbs.ejs', { crumbs: [
+  { label: 'My Structures', url: '/structures' },
+  { label: structure.name, url: `/structures/${structure._id}` },
+  { label: animal.name, url: `/structures/${structure._id}/animals/${animal._id}` },
+  { label: 'New Log Entry', url: null }
+]}) %>
   <h1>New Log Entry for <%= animal.name %></h1>
 
   <form action="/structures/<%= structure._id %>/animals/<%= animal._id %>/logEntries" method="POST">

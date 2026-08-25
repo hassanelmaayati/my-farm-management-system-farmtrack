@@ -7,6 +7,11 @@
 </head>
 <body>
   <%- include('../partials/navbar.ejs') %>
+  <%- include('../partials/breadcrumbs.ejs', { crumbs: [
+    { label: 'My Structures', url: '/structures' },
+    { label: structure.name, url: `/structures/${structure._id}` },
+    { label: animal.name, url: null }
+  ]}) %>
   <h1><%= animal.name %></h1>
   <p><strong>Species:</strong> <%= animal.species %></p>
   <p><strong>Breed:</strong> <%= animal.breed || 'N/A' %></p>
@@ -16,7 +21,7 @@
 
   <a href="/structures/<%= structure._id %>/animals/<%= animal._id %>/edit">Edit Animal</a>
 
-  <form action="/structures/<%= structure._id %>/animals/<%= animal._id %>?_method=DELETE" method="POST" style="display:inline;">
+  <form action="/structures/<%= structure._id %>/animals/<%= animal._id %>?_method=DELETE" method="POST" style="display:inline;" onsubmit="return confirm('Delete this animal and all its log entries? This cannot be undone.');">
     <button type="submit">Delete Animal</button>
   </form>
 
@@ -32,7 +37,7 @@
           <strong><%= log.eventType %></strong> (<%= log.date ? log.date.toISOString().split('T')[0] : 'No Date' %>):
           <%= log.description %>
           <a href="/structures/<%= structure._id %>/animals/<%= animal._id %>/logEntries/<%= log._id %>/edit">Edit</a>
-          <form action="/structures/<%= structure._id %>/animals/<%= animal._id %>/logEntries/<%= log._id %>?_method=DELETE" method="POST" style="display:inline;">
+          <form action="/structures/<%= structure._id %>/animals/<%= animal._id %>/logEntries/<%= log._id %>?_method=DELETE" method="POST" style="display:inline;" onsubmit="return confirm('Delete this log entry?');">
             <button type="submit">Delete</button>
           </form>
         </li>
