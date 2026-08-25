@@ -1,13 +1,16 @@
 const Animal = require('../models/animal.js');
 const Structure = require('../models/structure.js');
+const LogEntry = require('../models/logEntry.js'); 
 
 const create = async (req, res) => {
   try {
-    const structure = await Structure.findOne({
-      _id: req.params.structureId,
-      user: req.session.user._id,
-    });
+    const structure = await Structure.findOne({ _id: req.params.structureId, user: req.session.user._id });
     if (!structure) return res.redirect('/structures');
+
+    const { name, species } = req.body;
+    if (!name || !name.trim() || !species || !species.trim()) {
+      return res.render('animals/new.ejs', { structure, error: 'Name and species are required.' });
+    }
 
     req.body.structure = structure._id;
     await Animal.create(req.body);
@@ -32,7 +35,9 @@ const show = async (req, res) => {
     });
     if (!animal) return res.redirect(`/structures/${structure._id}`);
 
-    res.render('animals/show.ejs', { animal, structure });
+    const logs = await LogEntry.find({ animal: animal._id }).sort({ date: -1 });
+
+    res.render('animals/show.ejs', { animal, structure, logs }); 
   } catch (err) {
     console.log(err);
     res.redirect('/structures');
