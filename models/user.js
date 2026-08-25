@@ -15,11 +15,9 @@ const userSchema= new mongoose.Schema({
   },
 })
 
-//hashing the pass before saving it in the database
-userSchema.pre('save',async function (next) {
-  if(!this.isModified('password')) return next()
-  this.password=await bcrypt.hash(this.password,10)
-  next()
+userSchema.pre('save', async function () {
+  if (!this.isModified('password')) return
+  this.password = await bcrypt.hash(this.password, 10)
 })
 
 //to hide the password when sending user data
