@@ -1,0 +1,9 @@
+<div class="breadcrumbs">
+  <% crumbs.forEach((crumb, i) => { %>
+    <% if (i < crumbs.length - 1) { %>
+      <a href="<%= crumb.url %>"><%= crumb.label %></a> <span>/</span>
+    <% } else { %>
+      <span class="current"><%= crumb.label %></span>
+    <% } %>
+  <% }) %>
+</div>
