@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= structure.name %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('../partials/navbar.ejs') %>
+  <%- include('../partials/breadcrumbs.ejs', { crumbs: [
+    { label: 'My Structures', url: '/structures' },
+    { label: structure.name, url: null }
+  ]}) %>
+  <h1><%= structure.name %> (<%= structure.type %>)</h1>
+  <p><strong>Notes:</strong> <%= structure.notes || 'None' %></p>
+
+  <a href="/structures/<%= structure._id %>/edit">Edit Structure</a>
+  <form action="/structures/<%= structure._id %>?_method=DELETE" method="POST" style="display:inline;" onsubmit="return confirm('Delete this structure and all its animals\' history? This cannot be undone.');">
+    <button type="submit">Delete Structure</button>
+  </form>
+
+  <hr>
+
+  <h2>Animals</h2>
+  <a href="/structures/<%= structure._id %>/animals/new">+ Add Animal</a>
+
+  <% if (animals && animals.length > 0) { %>
+    <ul>
+      <% animals.forEach(animal => { %>
+        <li>
+          <a href="/structures/<%= structure._id %>/animals/<%= animal._id %>">
+            <%= animal.name %> (<%= animal.species %>) — <%= animal.status %>
+          </a>
+        </li>
+      <% }) %>
+    </ul>
+  <% } else { %>
+    <p>No animals in this structure yet.</p>
+  <% } %>
+</body>
+</html>

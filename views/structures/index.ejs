@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Structures</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('../partials/navbar.ejs') %>
+  <h1>My Structures</h1>
+
+  <a href="/structures/new">+ Add Structure</a>
+
+  <% if (structures.length > 0) { %>
+    <ul>
+      <% structures.forEach(structure => { %>
+        <li>
+          <a href="/structures/<%= structure._id %>"><%= structure.name %></a>
+          (<%= structure.type %>)
+          <a href="/structures/<%= structure._id %>/edit">Edit</a>
+          <form action="/structures/<%= structure._id %>?_method=DELETE" method="POST" style="display:inline;" onsubmit="return confirm('Delete this structure? This cannot be undone.');">
+            <button type="submit">Delete</button>
+          </form>
+        </li>
+      <% }) %>
+    </ul>
+  <% } else { %>
+    <p>You haven't added any structures yet.</p>
+  <% } %>
+</body>
+</html>

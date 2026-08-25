@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit <%= structure.name %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('../partials/navbar.ejs') %>
+  <h1>Edit <%= structure.name %></h1>
+
+  <form action="/structures/<%= structure._id %>?_method=PUT" method="POST">
+    <label for="name">Name:</label>
+    <input type="text" name="name" id="name" value="<%= structure.name %>" required>
+
+    <label for="type">Type:</label>
+    <select name="type" id="type" required>
+      <% const types = ['Barn', 'Stable', 'Coop', 'Pen', 'Other']; %>
+      <% types.forEach(t => { %>
+        <option value="<%= t %>" <%= structure.type === t ? 'selected' : '' %>><%= t %></option>
+      <% }) %>
+    </select>
+
+    <label for="notes">Notes:</label>
+    <textarea name="notes" id="notes"><%= structure.notes %></textarea>
+
+    <button type="submit">Update Structure</button>
+  </form>
+</body>
+</html>

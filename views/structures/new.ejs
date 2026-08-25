@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>New Structure</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('../partials/navbar.ejs') %>
+  <h1>Add a Structure</h1>
+<% if (error) { %>
+  <p class="error"><%= error %></p>
+<% } %>
+  <form action="/structures" method="POST">
+    <label for="name">Name:</label>
+    <input type="text" name="name" id="name" required>
+
+    <label for="type">Type:</label>
+    <select name="type" id="type" required>
+      <option value="Barn">Barn</option>
+      <option value="Stable">Stable</option>
+      <option value="Coop">Coop</option>
+      <option value="Pen">Pen</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <label for="notes">Notes:</label>
+    <textarea name="notes" id="notes"></textarea>
+
+    <button type="submit">Save Structure</button>
+  </form>
+</body>
+</html>
