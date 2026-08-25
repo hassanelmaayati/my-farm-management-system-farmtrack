@@ -9,7 +9,6 @@ const structuresRouter = require("./routes/structures.js");
 const methodOverride = require("method-override");
 const animalsRouter = require("./routes/animals.js");
 const logEntriesRouter = require("./routes/logEntries.js");
-// Custom Middleware
 const passUser = require("./middleware/passUser.js");
 const isSignedIn = require("./middleware/isSignedIn.js");
 
@@ -28,10 +27,18 @@ app.use(
 );
 app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
+app.use(express.static("public")); 
 
 app.use(passUser);
+
 // Public
-app.use("/", authRouter);
+app.use("/auth", authRouter); 
+
+app.get("/", (req, res) => {          
+  if (req.session.user) return res.redirect("/structures");
+  res.redirect("/auth/login");
+});
+
 // Private
 app.use(isSignedIn);
 
