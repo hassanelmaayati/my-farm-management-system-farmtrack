@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title><%= structure.name %></title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
@@ -11,31 +12,44 @@
     { label: 'My Structures', url: '/structures' },
     { label: structure.name, url: null }
   ]}) %>
-  <h1><%= structure.name %> (<%= structure.type %>)</h1>
-  <p><strong>Notes:</strong> <%= structure.notes || 'None' %></p>
 
-  <a href="/structures/<%= structure._id %>/edit">Edit Structure</a>
-  <form action="/structures/<%= structure._id %>?_method=DELETE" method="POST" style="display:inline;" onsubmit="return confirm('Delete this structure and all its animals\' history? This cannot be undone.');">
-    <button type="submit">Delete Structure</button>
-  </form>
+  <div class="container">
+    <div class="page-header">
+      <h1><%= structure.name %> <span class="badge"><%= structure.type %></span></h1>
+      <div class="list-row-actions">
+        <a href="/structures/<%= structure._id %>/edit" class="btn btn-sm">Edit Structure</a>
+        <form action="/structures/<%= structure._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Delete this structure and all its animals\' history? This cannot be undone.');">
+          <button type="submit" class="btn btn-sm btn-danger">Delete Structure</button>
+        </form>
+      </div>
+    </div>
 
-  <hr>
-
-  <h2>Animals</h2>
-  <a href="/structures/<%= structure._id %>/animals/new">+ Add Animal</a>
-
-  <% if (animals && animals.length > 0) { %>
-    <ul>
-      <% animals.forEach(animal => { %>
-        <li>
-          <a href="/structures/<%= structure._id %>/animals/<%= animal._id %>">
-            <%= animal.name %> (<%= animal.species %>) — <%= animal.status %>
-          </a>
-        </li>
-      <% }) %>
+    <ul class="detail-list">
+      <li><span class="detail-label">Notes</span> <span><%= structure.notes || 'None' %></span></li>
     </ul>
-  <% } else { %>
-    <p>No animals in this structure yet.</p>
-  <% } %>
+
+    <hr>
+
+    <div class="page-header">
+      <h2>Animals</h2>
+      <a href="/structures/<%= structure._id %>/animals/new" class="btn btn-primary btn-sm">+ Add Animal</a>
+    </div>
+
+    <% if (animals && animals.length > 0) { %>
+      <ul class="list-card">
+        <% animals.forEach(animal => { %>
+          <li class="list-row">
+            <div class="list-row-main">
+              <a href="/structures/<%= structure._id %>/animals/<%= animal._id %>"><%= animal.name %></a>
+              <div class="list-row-meta"><%= animal.species %></div>
+            </div>
+            <span class="badge"><%= animal.status %></span>
+          </li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <div class="empty-state">No animals in this structure yet.</div>
+    <% } %>
+  </div>
 </body>
 </html>

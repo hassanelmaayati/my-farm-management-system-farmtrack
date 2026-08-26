@@ -2,30 +2,39 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>My Structures</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <%- include('../partials/navbar.ejs') %>
-  <h1>My Structures</h1>
 
-  <a href="/structures/new">+ Add Structure</a>
+  <div class="container">
+    <div class="page-header">
+      <h1>My Structures</h1>
+      <a href="/structures/new" class="btn btn-primary">+ Add Structure</a>
+    </div>
 
-  <% if (structures.length > 0) { %>
-    <ul>
-      <% structures.forEach(structure => { %>
-        <li>
-          <a href="/structures/<%= structure._id %>"><%= structure.name %></a>
-          (<%= structure.type %>)
-          <a href="/structures/<%= structure._id %>/edit">Edit</a>
-          <form action="/structures/<%= structure._id %>?_method=DELETE" method="POST" style="display:inline;" onsubmit="return confirm('Delete this structure? This cannot be undone.');">
-            <button type="submit">Delete</button>
-          </form>
-        </li>
-      <% }) %>
-    </ul>
-  <% } else { %>
-    <p>You haven't added any structures yet.</p>
-  <% } %>
+    <% if (structures.length > 0) { %>
+      <ul class="list-card">
+        <% structures.forEach(structure => { %>
+          <li class="list-row">
+            <div class="list-row-main">
+              <a href="/structures/<%= structure._id %>"><%= structure.name %></a>
+              <div class="list-row-meta"><%= structure.type %></div>
+            </div>
+            <div class="list-row-actions">
+              <a href="/structures/<%= structure._id %>/edit" class="btn btn-sm">Edit</a>
+              <form action="/structures/<%= structure._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Delete this structure? This cannot be undone.');">
+                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+              </form>
+            </div>
+          </li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <div class="empty-state">You haven't added any structures yet.</div>
+    <% } %>
+  </div>
 </body>
 </html>
