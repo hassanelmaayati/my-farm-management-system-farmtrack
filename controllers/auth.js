@@ -1,39 +1,37 @@
-const User=require('../models/user.js')
-const bcrypt= require('bcrypt')
+const User = require('../models/user.js')
+const bcrypt = require('bcrypt')
 
 const signup = async (req, res) => {
   try {
     const { username, password } = req.body;
     if (!username || username.trim().length < 3) {
-      return res.send('Username must be at least 3 characters.');
+      return res.render('auth/signup.ejs', { error: 'Username must be at least 3 characters.' });
     }
     if (!password || password.length < 6) {
-      return res.send('Password must be at least 6 characters.');
+      return res.render('auth/signup.ejs', { error: 'Password must be at least 6 characters.' });
     }
     const userInDatabase = await User.findOne({ username });
     if (userInDatabase) {
-      return res.send('Username unavailable.');
+      return res.render('auth/signup.ejs', { error: 'Username unavailable.' });
     }
     const user = await User.create({ username, password });
     req.session.user = { username: user.username, _id: user._id };
     req.session.save(() => res.redirect('/structures'));
   } catch (err) {
     console.log(err);
-    res.redirect('/');
+    res.render('auth/signup.ejs', { error: 'Something went wrong. Try again.' });
   }
 };
 
 const login = async (req, res) => {
   try {
-    console.log("username:", req.body.username);
     const user = await User.findOne({ username: req.body.username })
-    console.log("found:", user);
     if (!user) {
-      return res.send("Login failed, Try again.")
+      return res.render('auth/login.ejs', { error: 'Login failed, try again.' });
     }
     const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password)
     if (!isPasswordCorrect) {
-      return res.send('Login failed, Try again.')
+      return res.render('auth/login.ejs', { error: 'Login failed, try again.' });
     }
 
     req.session.user = { username: user.username, _id: user._id }
@@ -43,9 +41,9 @@ const login = async (req, res) => {
 
   } catch (err) {
     console.log(err)
-    res.redirect('/')
+    res.render('auth/login.ejs', { error: 'Something went wrong. Try again.' });
   }
-} 
+}
 
 const logout = (req, res) => {
   req.session.destroy((err) => {
@@ -55,4 +53,4 @@ const logout = (req, res) => {
   });
 };
 
-module.exports={ signup, login, logout}
+module.exports = { signup, login, logout }

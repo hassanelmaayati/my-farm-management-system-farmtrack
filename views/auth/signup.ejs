@@ -2,21 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sign Up - FarmTrack</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <%- include('../partials/navbar.ejs') %>
-  <h1>Create an Account</h1>
-  
-  <form action="/auth/signup" method="POST">
-    <label for="username">Username:</label>
-    <input type="text" name="username" id="username" required>
-    
-    <label for="password">Password:</label>
-    <input type="password" name="password" id="password" required>
-    
-    <button type="submit">Sign Up</button>
-  </form>
+
+  <div class="auth-wrap">
+    <h1>Create an Account</h1>
+
+    <div class="card">
+      <% if (error) { %>
+        <div class="alert alert-error"><%= error %></div>
+      <% } %>
+
+      <form class="form" action="/auth/signup" method="POST">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" name="username" id="username" minlength="3" required autofocus>
+          <span class="hint">At least 3 characters.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" name="password" id="password" minlength="6" required>
+          <span class="hint">At least 6 characters.</span>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+        </div>
+      </form>
+    </div>
+
+    <p>Already have an account? <a href="/auth/login">Log in</a></p>
+  </div>
 </body>
 </html>
