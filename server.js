@@ -34,9 +34,9 @@ app.use(passUser);
 // Public
 app.use("/auth", authRouter); 
 
-app.get("/", (req, res) => {          
+app.get("/", (req, res) => {
   if (req.session.user) return res.redirect("/structures");
-  res.redirect("/auth/login");
+  res.render("welcome.ejs");
 });
 
 // Private
@@ -48,6 +48,15 @@ app.use(
   "/structures/:structureId/animals/:animalId/logentries",
   logEntriesRouter,
 );
+
+app.use((req, res) => {
+  res.status(404).render("404.ejs");
+});
+
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).render("error.ejs");
+});
 
 app.listen(3000, () => {
   console.log("Listening on port 3000");

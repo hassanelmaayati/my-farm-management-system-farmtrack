@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page Not Found - FarmTrack</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('partials/navbar.ejs') %>
+
+  <div class="status-page">
+    <div class="status-code">404</div>
+    <h1>Page not found</h1>
+    <p>The page you're looking for doesn't exist or may have been moved.</p>
+    <a href="<%= user ? '/structures' : '/' %>" class="btn btn-primary">Go back home</a>
+  </div>
+</body>
+</html>
