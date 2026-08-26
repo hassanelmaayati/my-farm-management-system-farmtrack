@@ -40,7 +40,7 @@ const renderNewForm = async (req, res) => {
   try {
     const owned = await findOwnedAnimal(req);
     if (!owned) return res.redirect('/structures');
-    res.render('logEntries/new.ejs', { structure: owned.structure, animal: owned.animal });
+    res.render('logEntries/new.ejs', { structure: owned.structure, animal: owned.animal, error: null });
   } catch (err) {
     console.log(err);
     res.redirect('/structures');
@@ -58,7 +58,7 @@ const renderEditForm = async (req, res) => {
     });
     if (!logEntry) return res.redirect(`/structures/${owned.structure._id}/animals/${owned.animal._id}`);
 
-    res.render('logEntries/edit.ejs', { logEntry, structure: owned.structure, animal: owned.animal });
+    res.render('logEntries/edit.ejs', { logEntry, structure: owned.structure, animal: owned.animal, error: null });
   } catch (err) {
     console.log(err);
     res.redirect('/structures');
@@ -75,6 +75,11 @@ const update = async (req, res) => {
       animal: owned.animal._id,
     });
     if (!logEntry) return res.redirect(`/structures/${owned.structure._id}/animals/${owned.animal._id}`);
+
+    const { date, eventType } = req.body;
+    if (!date || !eventType) {
+      return res.render('logEntries/edit.ejs', { logEntry, structure: owned.structure, animal: owned.animal, error: 'Date and event type are required.' });
+    }
 
     await LogEntry.findByIdAndUpdate(req.params.id, req.body);
     res.redirect(`/structures/${owned.structure._id}/animals/${owned.animal._id}`);
