@@ -3,7 +3,6 @@
 
 [![Live Demo](https://img.shields.io/badge/Live_Demo-FarmTrack-brightgreen?style=for-the-badge&logo=render)](https://farmtrack-36ld.onrender.com/)
 
-**Live Application:** [https://farmtrack-36ld.onrender.com/](https://farmtrack-36ld.onrender.com/)
 
 FarmTrack is a farm management web app that lets farmers organize their animals into structures (barns, stables, coops, etc.) and keep a history log for each animal, tracking health status, sales, and other events over time. Built as a MEN stack CRUD app (MongoDB, Express, Node, EJS) with session-based authentication. Each user only has access to their own farm data.
 ## ScreenShots
