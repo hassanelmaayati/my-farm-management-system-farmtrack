@@ -489,7 +489,7 @@ input:invalid:not(:placeholder-shown) {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(rgba(20, 24, 16, 0.55), rgba(20, 24, 16, 0.55)), url("/images/farmtrackbg.jpg");
+  background: linear-gradient(rgba(20, 24, 16, 0.55), rgba(20, 24, 16, 0.55)), url("/images/farmtrackbg.jpg"); /*alt: background image for welcome screen, CSS background images cannot have an alt attribute because alt is a HTML-specific attribute designed for standard <img> tags*/
   background-size: cover;
   background-position: center;
 }
