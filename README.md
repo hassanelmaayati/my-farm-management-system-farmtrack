@@ -1,4 +1,4 @@
-<img width="5580" height="3139" alt="farmtrackbg" src="https://github.com/user-attachments/assets/b3d8e4cd-94d6-4015-93b7-41d5eeb0f8d7" />
+
 # FarmTrack
 
 FarmTrack is a farm management web app that lets farmers organize their animals into structures (barns, stables, coops, etc.) and keep a history log for each animal, tracking health status, sales, and other events over time. Built as a MEN stack CRUD app (MongoDB, Express, Node, EJS) with session-based authentication. Each user only has access to their own farm data.
