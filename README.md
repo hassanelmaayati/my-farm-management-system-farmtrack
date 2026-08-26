@@ -58,7 +58,7 @@ FarmTrack is a farm management web app that lets farmers organize their animals 
 - EJS
 - HTML / CSS / JavaScript
 
-## Next Steps
+## Future plans
 
 - **Analytics Dashboard:** Implement visual graphs/charts tracking herd count changes, health trends, and financial metrics over time.
 - **Search & Filtering:** Allow filtering animals by health status, species, or purchase/sale date ranges across all structures.
