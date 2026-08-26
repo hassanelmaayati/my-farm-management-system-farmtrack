@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>New Log Entry</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
@@ -13,25 +14,41 @@
   { label: animal.name, url: `/structures/${structure._id}/animals/${animal._id}` },
   { label: 'New Log Entry', url: null }
 ]}) %>
-  <h1>New Log Entry for <%= animal.name %></h1>
 
-  <form action="/structures/<%= structure._id %>/animals/<%= animal._id %>/logEntries" method="POST">
-    <label for="date">Date:</label>
-    <input type="date" name="date" id="date" required>
+  <div class="container">
+    <h1>New Log Entry for <%= animal.name %></h1>
 
-    <label for="eventType">Event Type:</label>
-    <select name="eventType" id="eventType" required>
-      <option value="Fed">Fed</option>
-      <option value="Vet Visit">Vet Visit</option>
-      <option value="Sold">Sold</option>
-      <option value="Died">Died</option>
-      <option value="Other">Other</option>
-    </select>
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="alert alert-error"><%= error %></div>
+    <% } %>
 
-    <label for="description">Description:</label>
-    <textarea name="description" id="description"></textarea>
+    <form class="form" action="/structures/<%= structure._id %>/animals/<%= animal._id %>/logEntries" method="POST">
+      <div class="form-group">
+        <label for="date">Date</label>
+        <input type="date" name="date" id="date" required>
+      </div>
 
-    <button type="submit">Save Entry</button>
-  </form>
+      <div class="form-group">
+        <label for="eventType">Event Type</label>
+        <select name="eventType" id="eventType" required>
+          <option value="Fed">Fed</option>
+          <option value="Vet Visit">Vet Visit</option>
+          <option value="Sold">Sold</option>
+          <option value="Died">Died</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea name="description" id="description"></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save Entry</button>
+        <a href="/structures/<%= structure._id %>/animals/<%= animal._id %>" class="btn">Cancel</a>
+      </div>
+    </form>
+  </div>
 </body>
 </html>
