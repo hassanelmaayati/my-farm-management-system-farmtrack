@@ -60,4 +60,12 @@ FarmTrack is a farm management web app that lets farmers organize their animals 
 
 ## Next Steps
 
-*(to be added later)*
+- **Analytics Dashboard:** Implement visual graphs/charts tracking herd count changes, health trends, and financial metrics over time.
+- **Search & Filtering:** Allow filtering animals by health status, species, or purchase/sale date ranges across all structures.
+- **Export Data (CSV/PDF):** Enable users to export animal history logs and health reports for veterinary or compliance records.
+- **Alerts & Reminders:** Set up automated notifications for upcoming vaccinations, routine checkups, or expected births.
+- **Batch Operations:** Add bulk actions to assign multiple animals to a structure or update health statuses simultaneously.
+
+## References
+
+- Stock photography provided by [Valeria Reverdo](https://unsplash.com/photos/a-herd-of-sheep-grazing-on-a-lush-green-field-yB3YWgyQIk0) via Unsplash.
