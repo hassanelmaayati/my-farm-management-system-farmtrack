@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title><%= animal.name %> Details</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
@@ -12,39 +13,55 @@
     { label: structure.name, url: `/structures/${structure._id}` },
     { label: animal.name, url: null }
   ]}) %>
-  <h1><%= animal.name %></h1>
-  <p><strong>Species:</strong> <%= animal.species %></p>
-  <p><strong>Breed:</strong> <%= animal.breed || 'N/A' %></p>
-  <p><strong>Birthdate:</strong> <%= animal.birthdate ? animal.birthdate.toISOString().split('T')[0] : 'N/A' %></p>
-  <p><strong>Status:</strong> <%= animal.status %></p>
-  <p><strong>Notes:</strong> <%= animal.notes || 'None' %></p>
 
-  <a href="/structures/<%= structure._id %>/animals/<%= animal._id %>/edit">Edit Animal</a>
+  <div class="container">
+    <div class="page-header">
+      <h1><%= animal.name %> <span class="badge"><%= animal.status %></span></h1>
+      <div class="list-row-actions">
+        <a href="/structures/<%= structure._id %>/animals/<%= animal._id %>/edit" class="btn btn-sm">Edit Animal</a>
+        <form action="/structures/<%= structure._id %>/animals/<%= animal._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Delete this animal and all its log entries? This cannot be undone.');">
+          <button type="submit" class="btn btn-sm btn-danger">Delete Animal</button>
+        </form>
+      </div>
+    </div>
 
-  <form action="/structures/<%= structure._id %>/animals/<%= animal._id %>?_method=DELETE" method="POST" style="display:inline;" onsubmit="return confirm('Delete this animal and all its log entries? This cannot be undone.');">
-    <button type="submit">Delete Animal</button>
-  </form>
-
-  <hr>
-
-  <h2>Logs</h2>
-  <a href="/structures/<%= structure._id %>/animals/<%= animal._id %>/logEntries/new">Add Log Entry</a>
-
-  <% if (logs && logs.length > 0) { %>
-    <ul>
-      <% logs.forEach(log => { %>
-        <li>
-          <strong><%= log.eventType %></strong> (<%= log.date ? log.date.toISOString().split('T')[0] : 'No Date' %>):
-          <%= log.description %>
-          <a href="/structures/<%= structure._id %>/animals/<%= animal._id %>/logEntries/<%= log._id %>/edit">Edit</a>
-          <form action="/structures/<%= structure._id %>/animals/<%= animal._id %>/logEntries/<%= log._id %>?_method=DELETE" method="POST" style="display:inline;" onsubmit="return confirm('Delete this log entry?');">
-            <button type="submit">Delete</button>
-          </form>
-        </li>
-      <% }) %>
+    <ul class="detail-list">
+      <li><span class="detail-label">Species</span> <span><%= animal.species %></span></li>
+      <li><span class="detail-label">Breed</span> <span><%= animal.breed || 'N/A' %></span></li>
+      <li><span class="detail-label">Birthdate</span> <span><%= animal.birthdate ? animal.birthdate.toISOString().split('T')[0] : 'N/A' %></span></li>
+      <li><span class="detail-label">Notes</span> <span><%= animal.notes || 'None' %></span></li>
     </ul>
-  <% } else { %>
-    <p>No log entries yet.</p>
-  <% } %>
+
+    <hr>
+
+    <div class="page-header">
+      <h2>Logs</h2>
+      <a href="/structures/<%= structure._id %>/animals/<%= animal._id %>/logEntries/new" class="btn btn-primary btn-sm">+ Add Log Entry</a>
+    </div>
+
+    <% if (logs && logs.length > 0) { %>
+      <ul class="list-card">
+        <% logs.forEach(log => { %>
+          <li class="list-row">
+            <div class="list-row-main">
+              <span class="badge"><%= log.eventType %></span>
+              <div class="list-row-meta">
+                <%= log.date ? log.date.toISOString().split('T')[0] : 'No Date' %>
+                <% if (log.description) { %> — <%= log.description %><% } %>
+              </div>
+            </div>
+            <div class="list-row-actions">
+              <a href="/structures/<%= structure._id %>/animals/<%= animal._id %>/logEntries/<%= log._id %>/edit" class="btn btn-sm">Edit</a>
+              <form action="/structures/<%= structure._id %>/animals/<%= animal._id %>/logEntries/<%= log._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Delete this log entry?');">
+                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+              </form>
+            </div>
+          </li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <div class="empty-state">No log entries yet.</div>
+    <% } %>
+  </div>
 </body>
 </html>

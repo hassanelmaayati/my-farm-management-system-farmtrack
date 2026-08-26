@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Add Animal - <%= structure.name %></title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
@@ -10,36 +11,58 @@
   <%- include('../partials/breadcrumbs.ejs', { crumbs: [
   { label: 'My Structures', url: '/structures' },
   { label: structure.name, url: `/structures/${structure._id}` },
-  { label: typeof animal !== 'undefined' ? animal.name : 'New Animal', url: null }
+  { label: 'New Animal', url: null }
 ]}) %>
-  <h1>Add Animal to <%= structure.name %></h1>
 
-  <form action="/structures/<%= structure._id %>/animals" method="POST">
-    <label for="name">Name:</label>
-    <input type="text" name="name" id="name" required>
+  <div class="container">
+    <h1>Add Animal to <%= structure.name %></h1>
 
-    <label for="species">Species:</label>
-    <input type="text" name="species" id="species" required>
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="alert alert-error"><%= error %></div>
+    <% } %>
 
-    <label for="breed">Breed:</label>
-    <input type="text" name="breed" id="breed">
+    <form class="form" action="/structures/<%= structure._id %>/animals" method="POST">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" required>
+      </div>
 
-    <label for="birthdate">Birthdate:</label>
-    <input type="date" name="birthdate" id="birthdate">
+      <div class="form-group">
+        <label for="species">Species</label>
+        <input type="text" name="species" id="species" required>
+      </div>
 
-    <label for="status">Status:</label>
-    <select name="status" id="status">
-      <option value="Healthy">Healthy</option>
-      <option value="Sick">Sick</option>
-      <option value="Sold">Sold</option>
-      <option value="Deceased">Deceased</option>
-      <option value="Other">Other</option>
-    </select>
+      <div class="form-group">
+        <label for="breed">Breed</label>
+        <input type="text" name="breed" id="breed">
+      </div>
 
-    <label for="notes">Notes:</label>
-    <textarea name="notes" id="notes"></textarea>
+      <div class="form-group">
+        <label for="birthdate">Birthdate</label>
+        <input type="date" name="birthdate" id="birthdate">
+      </div>
 
-    <button type="submit">Save Animal</button>
-  </form>
+      <div class="form-group">
+        <label for="status">Status</label>
+        <select name="status" id="status">
+          <option value="Healthy">Healthy</option>
+          <option value="Sick">Sick</option>
+          <option value="Sold">Sold</option>
+          <option value="Deceased">Deceased</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="notes">Notes</label>
+        <textarea name="notes" id="notes"></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save Animal</button>
+        <a href="/structures/<%= structure._id %>" class="btn">Cancel</a>
+      </div>
+    </form>
+  </div>
 </body>
 </html>
