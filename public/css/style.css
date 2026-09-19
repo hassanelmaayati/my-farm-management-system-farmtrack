@@ -596,3 +596,16 @@ input:invalid:not(:placeholder-shown) {
     min-width: 0;
   }
 }
+
+.nav-logout { display: inline; margin: 0; }
+nav.navbar .nav-link-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+nav.navbar .nav-link-btn:hover { color: var(--color-primary-dark); }

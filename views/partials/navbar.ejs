@@ -4,7 +4,10 @@
     <div class="nav-links">
       <% if (user) { %>
         <a href="/structures">My Structures</a>
-        <a href="/auth/logout">Log Out</a>
+        <form action="/auth/logout" method="POST" class="nav-logout">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button type="submit" class="nav-link-btn">Log Out</button>
+        </form>
       <% } else { %>
         <a href="/auth/login">Log In</a>
         <a href="/auth/signup">Sign Up</a>
