@@ -12,8 +12,8 @@ const create = async (req, res) => {
       return res.render('animals/new.ejs', { structure, error: 'Name and species are required.' });
     }
 
-    req.body.structure = structure._id;
-    await Animal.create(req.body);
+    const { breed, birthdate, status, notes } = req.body;
+    await Animal.create({ name, species, breed, birthdate: birthdate || undefined, status, notes, structure: structure._id });
     res.redirect(`/structures/${structure._id}`);
   } catch (err) {
     console.log(err);
@@ -98,7 +98,8 @@ const update = async (req, res) => {
       return res.render('animals/edit.ejs', { animal, structure, error: 'Name and species are required.' });
     }
 
-    await Animal.findByIdAndUpdate(req.params.id, req.body);
+    const { breed, birthdate, status, notes } = req.body;
+    await Animal.findByIdAndUpdate(req.params.id, { name, species, breed, birthdate: birthdate || null, status, notes }, { runValidators: true });
     res.redirect(`/structures/${structure._id}/animals/${req.params.id}`);
   } catch (err) {
     console.log(err);
@@ -114,10 +115,11 @@ const destroy = async (req, res) => {
     });
     if (!structure) return res.redirect('/structures');
 
-    await Animal.findOneAndDelete({
+    const animal = await Animal.findOneAndDelete({
       _id: req.params.id,
       structure: structure._id,
     });
+    if (animal) await LogEntry.deleteMany({ animal: animal._id });
     res.redirect(`/structures/${structure._id}`);
   } catch (err) {
     console.log(err);
