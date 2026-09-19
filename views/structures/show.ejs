@@ -19,6 +19,7 @@
       <div class="list-row-actions">
         <a href="/structures/<%= structure._id %>/edit" class="btn btn-sm">Edit Structure</a>
         <form action="/structures/<%= structure._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Delete this structure and all its animals\' history? This cannot be undone.');">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <button type="submit" class="btn btn-sm btn-danger">Delete Structure</button>
         </form>
       </div>
