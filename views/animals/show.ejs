@@ -20,6 +20,7 @@
       <div class="list-row-actions">
         <a href="/structures/<%= structure._id %>/animals/<%= animal._id %>/edit" class="btn btn-sm">Edit Animal</a>
         <form action="/structures/<%= structure._id %>/animals/<%= animal._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Delete this animal and all its log entries? This cannot be undone.');">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <button type="submit" class="btn btn-sm btn-danger">Delete Animal</button>
         </form>
       </div>
@@ -53,6 +54,7 @@
             <div class="list-row-actions">
               <a href="/structures/<%= structure._id %>/animals/<%= animal._id %>/logEntries/<%= log._id %>/edit" class="btn btn-sm">Edit</a>
               <form action="/structures/<%= structure._id %>/animals/<%= animal._id %>/logEntries/<%= log._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Delete this log entry?');">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <button type="submit" class="btn btn-sm btn-danger">Delete</button>
               </form>
             </div>
