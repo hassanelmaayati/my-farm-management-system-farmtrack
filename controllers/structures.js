@@ -1,5 +1,6 @@
 const Structure = require('../models/structure.js')
-const Animal = require('../models/animal.js') 
+const Animal = require('../models/animal.js')
+const LogEntry = require('../models/logEntry.js')
 
 const index = async (req, res) => {
   try {
@@ -21,8 +22,7 @@ const create = async (req, res) => {
     if (!name || !name.trim() || !type) {
       return res.render('structures/new.ejs', { error: 'Name and type are required.' });
     }
-    req.body.user = req.session.user._id;
-    await Structure.create(req.body);
+    await Structure.create({ name, type, notes: req.body.notes, user: req.session.user._id });
     res.redirect('/structures');
   } catch (err) {
     console.log(err);
@@ -68,7 +68,7 @@ const update = async (req, res) => {
       return res.render('structures/edit.ejs', { structure, error: 'Name and type are required.' });
     }
 
-    await Structure.findByIdAndUpdate(req.params.id, req.body);
+    await Structure.findByIdAndUpdate(req.params.id, { name, type, notes: req.body.notes }, { runValidators: true });
     res.redirect(`/structures/${req.params.id}`);
   } catch (err) {
     console.log(err);
@@ -78,10 +78,15 @@ const update = async (req, res) => {
 
 const destroy = async (req, res) => {
   try {
-    await Structure.findOneAndDelete({
+    const structure = await Structure.findOneAndDelete({
       _id: req.params.id,
       user: req.session.user._id,
     });
+    if (structure) {
+      const animalIds = await Animal.find({ structure: structure._id }).distinct('_id');
+      await LogEntry.deleteMany({ animal: { $in: animalIds } });
+      await Animal.deleteMany({ structure: structure._id });
+    }
     res.redirect('/structures');
   } catch (err) {
     console.log(err);
