@@ -27,8 +27,7 @@ const create = async (req, res) => {
       return res.render('logEntries/new.ejs', { structure: owned.structure, animal: owned.animal, error: 'Date and event type are required.' });
     }
 
-    req.body.animal = owned.animal._id;
-    await LogEntry.create(req.body);
+    await LogEntry.create({ date, eventType, description: req.body.description, animal: owned.animal._id });
     res.redirect(`/structures/${owned.structure._id}/animals/${owned.animal._id}`);
   } catch (err) {
     console.log(err);
@@ -81,7 +80,7 @@ const update = async (req, res) => {
       return res.render('logEntries/edit.ejs', { logEntry, structure: owned.structure, animal: owned.animal, error: 'Date and event type are required.' });
     }
 
-    await LogEntry.findByIdAndUpdate(req.params.id, req.body);
+    await LogEntry.findByIdAndUpdate(req.params.id, { date, eventType, description: req.body.description }, { runValidators: true });
     res.redirect(`/structures/${owned.structure._id}/animals/${owned.animal._id}`);
   } catch (err) {
     console.log(err);
