@@ -23,6 +23,7 @@
     <% } %>
 
     <form class="form" action="/structures/<%= structure._id %>/animals/<%= animal._id %>/logEntries/<%= logEntry._id %>?_method=PUT" method="POST">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       <div class="form-group">
         <label for="date">Date</label>
         <input type="date" name="date" id="date" value="<%= logEntry.date ? logEntry.date.toISOString().split('T')[0] : '' %>" required>
